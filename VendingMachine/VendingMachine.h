@@ -1,7 +1,7 @@
-#include "StateMachine.h"
-
-class VendingMachine : public StateMachine {
+#include "IOhandler.h"
+#include <iostream>
+class VendingMachine : public StateMachine, public IOhandler{
     public:
-        VendingMachine();
+        VendingMachine() {};
         void run();
 };

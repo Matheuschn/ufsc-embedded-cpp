@@ -1,5 +1,4 @@
-#include "VendingMachine.h"
-
+#include "VendingMachine.h" 
 void VendingMachine::run() {
     while (true) {
         Inputs input = getInput();

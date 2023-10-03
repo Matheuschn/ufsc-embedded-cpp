@@ -1,7 +1,7 @@
 #include <vector>
 
 class StateMachine {
-    protected:
+    public:
         enum States {
             S000 = 0,
             S025,
