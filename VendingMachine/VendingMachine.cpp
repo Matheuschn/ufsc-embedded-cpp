@@ -3,6 +3,6 @@ void VendingMachine::run() {
     while (true) {
         Inputs input = getInput();
         std::vector<Outputs> output = changeState(input);
-        writeOutputs(output);
+        if (!output.empty()) writeOutputs(output);
     }
 }

@@ -30,9 +30,11 @@ class StateMachine {
             LETIRPS
         };
 
-        StateMachine() {};
+        StateMachine() {
+            currentState = S000;
+        };
         std::vector<Outputs> changeState(Inputs input);
     
     private:
-        States currentState = States::S000;
+        States currentState;
 };
