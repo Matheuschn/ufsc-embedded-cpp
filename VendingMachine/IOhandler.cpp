@@ -15,20 +15,30 @@ StateMachine::Inputs IOhandler::getInput(){
         switch (input){
             case SW0:
                 return StateMachine::Inputs::M025;
+                break;
             case SW1:
                 return StateMachine::Inputs::M050;
+                break;
             case SW2:
                 return StateMachine::Inputs::M100;
+                break;
             case SW3:
                 return StateMachine::Inputs::DEV;
+                break;
             case SW4:
                 return StateMachine::Inputs::MEET;
+                break;
             case SW5:
                 return StateMachine::Inputs::ETIRPS;
+                break;
             default:
                 return StateMachine::Inputs::NONE;
+                break;
         }
         
+    }
+    else {
+        return StateMachine::Inputs::NONE;
     }
 }
 
