@@ -1,25 +1,45 @@
 #include "TimerManager.h"
+#include <avr/interrupt.h>
+#include "millis.h"
+#include "config.h"
 
-template<class T>
-void TimerManager::addTimer(time_t duration_ms, void (*callback)(T)) {
-    Timer *timer = new Timer<T> {duration_ms, 0, callback};
+
+void TimerManager::startTimer() {
+    init_millis(F_CPU);
+    sei();
+    previousTime = 0;
+}
+
+void TimerManager::addTimer(unsigned long duration_ms, callback_function callback, void* context, TimerType type) {
+    Timer *timer = new Timer {
+        duration_ms,
+        0,
+        callback,
+        context,
+        type
+    };
     timerList.pushBack(timer);
 }
 
 void TimerManager::update() {
-    time_t currentTime = getTime();
-    time_t timeSinceLastUpdate = currentTime - previousTime;
+    unsigned long currentTime = millis();
+    unsigned long timeSinceLastUpdate = currentTime - previousTime;
     previousTime = currentTime;
 
+    unsigned long length = timerList.length();
     //  Terrivelmente ineficiente!!!
-    for (int i = timerList.length() - 1; i >= 0; i--) {
+    for (unsigned int i = 0; i < length; i++) {
         Timer *timer = timerList.get(i);
 
-        time_t timeElapsed = timer->timeElapsed + timeSinceLastUpdate;
-        if (timeElapsed >= timer->duration) {
-            timer->callback();
+        unsigned long timeElapsed = timer->timeElapsed + timeSinceLastUpdate;
+        if (timeElapsed >= timer->duration_ms) {
+            timer->callback(timer->context, timer->type);
             delete timer;
-            timerList.deleteLast();
+            timerList.deleteNode(i);
+
+            //  Necessário já que estamos deletando elementos durante o loop
+            i--;
+            length--;
         } else {
             timer->timeElapsed = timeElapsed;
         }

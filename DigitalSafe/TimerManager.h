@@ -1,3 +1,8 @@
+#include "LinkedList.h"
+
+#ifndef __TIMERMANAGER_H_INCLUDED__
+#define __TIMERMANAGER_H_INCLUDED__
+
 class TimerManager {
     public:
         static TimerManager& getInstance() {
@@ -5,15 +10,30 @@ class TimerManager {
             return instance;
         }
 
-        template<class T>
-        struct Timer {
-            time_t duration_ms;
-            time_t timeElapsed;
-            void (*callback)(T);
+        void startTimer();
+
+        enum TimerType {
+            BEEP,
+            ALARM,
+            MOTOR,
+            ACCESS_STATUS,
         };
 
-        template<class T>
-        void addTimer(double duration_ms, void (*callback)(T));
+        typedef void (*callback_function)(void*, TimerType);
+
+        struct Timer {
+            unsigned long duration_ms;
+            unsigned long timeElapsed;
+            callback_function callback;
+            void* context;
+            TimerType type;
+        };
+
+        void addTimer(
+            unsigned long duration_ms,
+            callback_function callback,
+            void* context,
+            TimerType type);
         
         void update();
 
@@ -22,5 +42,7 @@ class TimerManager {
     private:
         TimerManager() {};
         LinkedList<Timer*> timerList;
-        time_t previousTime;
+        unsigned long previousTime;
 };
+
+#endif

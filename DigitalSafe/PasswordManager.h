@@ -1,13 +1,11 @@
-#include <string>
-
-#define PASSWORD_SIZE 4
+#include "config.h"
 
 class PasswordManager {
-    std::string password;
+    char password[PASSWORD_SIZE + 1];   //  Aloca espaço para o '\0' no final
     
     public:
-        PasswordManager() { password = ""; };
-        bool check(std::string str);
-        void set(std::string str);
+        PasswordManager(): password{0, 0, 0, 0, 0}  {};
+        bool check(char *str);
+        void set(char *str);
         bool isConfigured();
 };

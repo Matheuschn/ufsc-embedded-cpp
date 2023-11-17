@@ -1,20 +1,25 @@
-#include <string>
+#include "LCD.h"
+#include "Buzzer.h"
+#include "Motor.h"
+#include "TimerManager.h"
 
 class OutputManager {
-    LCD display;
-    Buzzer buzzer;
+    private:
+        LCD display;
+        Buzzer buzzer;
+        Motor motor;
 
-    friend void stopBeep();
+        friend void timerHandler(void *context, TimerManager::TimerType type);
 
+        void addTimer(unsigned long duration, TimerManager::TimerType type);
     public:
-        OutputManager();
+        OutputManager() {};
         void updateTimers();
-        void updatePassword(std::string str);
+        void updatePassword(char *str);
         void showAccessStatus(bool granted);
         void setupScreen();
         void mainScreen();
-        void beep(time_t duration = 250);
-        //void stopBeep();
+        void beep(unsigned long duration = 250);
         void alarm();
         void activateMotor();
 };

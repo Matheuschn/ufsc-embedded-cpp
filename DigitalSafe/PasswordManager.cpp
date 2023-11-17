@@ -1,17 +1,19 @@
 #include "PasswordManager.h"
+#include "config.h"
+#include <string.h> 
 
 bool PasswordManager::isConfigured() {
-    return !password.empty();
+    return password[0] != 0;
 }
 
-bool PasswordManager::check(std::string str) {
-    if (!isConfigured() || str.length() != PASSWORD_SIZE) return false;
+bool PasswordManager::check(char *str) {
+    if (!isConfigured() || strnlen(str, PASSWORD_SIZE) != PASSWORD_SIZE) return false;
 
-    return str == password;
+    return strncmp(password, str, PASSWORD_SIZE) == 0;
 }
 
-void PasswordManager::set(std::string str) {
-    if (str.empty() || str.length() != PASSWORD_SIZE) return;
+void PasswordManager::set(char *str) {
+    if (strnlen(str, PASSWORD_SIZE) != PASSWORD_SIZE) return;
 
-    password = str;
+    strncpy(password, str, PASSWORD_SIZE);
 }

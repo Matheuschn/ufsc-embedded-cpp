@@ -1,0 +1,4 @@
+#define MAX_TRIES 3
+#define PASSWORD_SIZE 4
+#define F_CPU 16000000UL
+#define DEVICE_ID 0xABADBABE
