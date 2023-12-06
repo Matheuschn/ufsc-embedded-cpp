@@ -10,6 +10,10 @@ void TimerManager::startTimer() {
     previousTime = 0;
 }
 
+unsigned long TimerManager::getTimestamp() {
+    return millis();
+}
+
 void TimerManager::addTimer(unsigned long duration_ms, callback_function callback, void* context, TimerType type) {
     Timer *timer = new Timer {
         duration_ms,

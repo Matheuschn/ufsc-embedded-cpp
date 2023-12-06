@@ -8,11 +8,13 @@ class EventLog {
             POWER_ON,
             SETUP_FINISHED,
             ALARM_ENABLED,
+            SERIAL_ACCESS,
         };
 
         struct Event {
             EventType event;
             long unsigned int id;
+            long unsigned int timestamp;
         };
 
         void add(EventType event);

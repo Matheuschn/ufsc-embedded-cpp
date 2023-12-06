@@ -37,6 +37,8 @@ class TimerManager {
         
         void update();
 
+        unsigned long getTimestamp();
+
         TimerManager(TimerManager const&) = delete;
         void operator=(TimerManager const&) = delete;
     private:
